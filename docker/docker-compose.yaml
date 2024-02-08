@@ -2,7 +2,10 @@ version: '3.1'
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.5.3
+    image: musman3/api
+    build:
+      context: ../api
+      dockerfile: Dockerfile
     restart: always
     environment:
       # Startup mode, 'api' starts the API server.
@@ -201,7 +204,10 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:0.5.3
+    image: musman3/web:v1
+    build:
+      context: ../web
+      dockerfile: Dockerfile
     restart: always
     environment:
       EDITION: SELF_HOSTED
@@ -309,4 +315,4 @@ services:
       - api
       - web
     ports:
-      - "80:80"
+      - "8080:80"

@@ -1,0 +1,30 @@
+name: Docker Build and Deploy
+
+on:
+  push:
+    branches:
+      - stage
+    paths:
+      - 'api/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Deploy using Docker Compose
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOST: your-remote-host
+          USER: your-ssh-username
+        run: |
+          echo "$SSH_PRIVATE_KEY" > ssh_key
+          chmod 600 ssh_key
+          scp -i ssh_key docker-compose.yml $USER@$HOST:/root/my-buddy-base/docker
+          ssh -i ssh_key $USER@$HOST "cd /root/my-buddy-base && git pull origin stage && cd /root/my-buddy-base/docker && docker-compose up -d --build"
