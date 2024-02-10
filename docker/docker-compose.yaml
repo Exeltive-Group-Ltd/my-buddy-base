@@ -84,7 +84,7 @@ services:
       # The type of vector store to use. Supported values are `weaviate`, `qdrant`, `milvus`.
       VECTOR_STORE: weaviate
       # The Weaviate endpoint URL. Only available when VECTOR_STORE is `weaviate`.
-      WEAVIATE_ENDPOINT: http://weaviate:8080
+      WEAVIATE_ENDPOINT: http://localhost:8080
       # The Weaviate API key.
       WEAVIATE_API_KEY: WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih
       # The Qdrant endpoint URL. Only available when VECTOR_STORE is `qdrant`.
@@ -165,7 +165,7 @@ services:
       # The type of vector store to use. Supported values are `weaviate`, `qdrant`, `milvus`.
       VECTOR_STORE: weaviate
       # The Weaviate endpoint URL. Only available when VECTOR_STORE is `weaviate`.
-      WEAVIATE_ENDPOINT: http://weaviate:8080
+      WEAVIATE_ENDPOINT: http://localhost:8080
       # The Weaviate API key.
       WEAVIATE_API_KEY: WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih
       # The Qdrant endpoint URL. Only available when VECTOR_STORE is `qdrant`.
@@ -254,8 +254,8 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
     # uncomment to expose redis port to host
-    # ports:
-    #   - "6379:6379"
+    ports:
+      - "6379:6379"
 
   # The Weaviate vector store.
   weaviate:
@@ -278,8 +278,8 @@ services:
       AUTHORIZATION_ADMINLIST_ENABLED: 'true'
       AUTHORIZATION_ADMINLIST_USERS: 'hello@dify.ai'
     # uncomment to expose weaviate port to host
-    # ports:
-    #  - "8080:8080"
+    ports:
+     - "8080:8080"
 
   # Qdrant vector store.
   # uncomment to use qdrant as vector store.
